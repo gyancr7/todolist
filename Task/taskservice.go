@@ -23,6 +23,7 @@ func GetAllTasks(response http.ResponseWriter, request *http.Request, db *gorm.D
 	userId := vars["id"]
 
 	getAllTasks(userId, db)
+
 	Utility.MarshalOutput(getAllTasks(userId, db), response)
 }
 
@@ -32,4 +33,12 @@ func DeleteTask(response http.ResponseWriter, request *http.Request, db *gorm.DB
 	taskId := vars["task_id"]
 
 	Utility.MarshalOutput(deleteTasks(userId, taskId, db), response)
+}
+
+func UpdateTask(response http.ResponseWriter, request *http.Request, db *gorm.DB) {
+	vars := mux.Vars(request)
+	userId := vars["user_id"]
+	taskId := vars["task_id"]
+
+	Utility.MarshalOutput(updateTask(userId, taskId, db), response)
 }

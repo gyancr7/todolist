@@ -1,25 +1,18 @@
 package User
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/jinzhu/gorm"
 	"io/ioutil"
 	"net/http"
+	"todolist/Utility"
 )
 
-func CreateNewUser(w http.ResponseWriter, r *http.Request, db *gorm.DB) {
-	reqBody, _ := ioutil.ReadAll(r.Body)
-
-	fmt.Fprintf(w, "%+v", string(reqBody))
+func CreateNewUser(response http.ResponseWriter, request *http.Request, db *gorm.DB) {
+	reqBody, _ := ioutil.ReadAll(request.Body)
 
 	var user User
 
-	err := json.Unmarshal([]byte(string(reqBody)), &user)
-
-	if err != nil {
-		fmt.Printf("Error Unmarshalling")
-	}
+	Utility.UnmarshalInput(reqBody, &user)
 
 	saveNewUser(&user, db)
 }

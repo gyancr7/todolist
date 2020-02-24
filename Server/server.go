@@ -26,6 +26,10 @@ func HandleRequests(db *gorm.DB) {
 
 	router.HandleFunc("/v1/user/{id}/getAllTasks", getAllTasks)
 
+	router.HandleFunc("/v1/user/{user_id}/delete_task/{task_id}", deleteTask).Methods("DELETE")
+
+	router.HandleFunc("/v1/user/{user_id}/update_task/{task_id}", updateTask).Methods("PATCH")
+
 	log.Fatal(http.ListenAndServe(":8081", router))
 }
 
@@ -47,5 +51,9 @@ func getAllTasks(response http.ResponseWriter, request *http.Request) {
 
 func deleteTask(response http.ResponseWriter, request *http.Request) {
 	Task.DeleteTask(response, request, dbConn)
+}
+
+func updateTask(response http.ResponseWriter, request *http.Request) {
+	Task.UpdateTask(response, request, dbConn)
 }
 
